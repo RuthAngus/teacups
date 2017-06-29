@@ -110,22 +110,6 @@ def calc_phase_and_amp(x, y, f):
     return phase, Amp
 
 
-def ACF_period(x, y, yerr):
-    """
-    Measure an ACF rotation period
-    x: (array)
-        The time array.
-    y: (array)
-        The flux array.
-    yerr: (array)
-        The flux uncertainties.
-    returns:
-    -------
-    period: (float)
-        The rotation period
-    """
-
-
 def gp_prots(kepid_list):
     """
     Takes a list of kepler ids and returns rotation periods.
