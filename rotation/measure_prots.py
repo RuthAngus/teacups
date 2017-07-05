@@ -30,6 +30,8 @@ def GP_rot(kepid, RESULTS_DIR="results"):
         The period posterior samples.
     """
     fn = os.path.join(RESULTS_DIR, "KIC-{}.h5".format(int(kepid)))
+    subprocess.call("gprot-fit {} --kepler -v".format(kepid), shell=True)
+    assert 0
     if not os.path.exists(fn):
         subprocess.call("gprot-fit {} --kepler -v".format(kepid), shell=True)
     df = pd.read_hdf(fn, key="samples")
@@ -143,11 +145,14 @@ def pgram_prots(kepid_list, LC_DIR="/Users/ruthangus/.kplr/data/lightcurves"):
 
 if __name__ == "__main__":
 
+    import sys
+    start, stop = int(sys.argv[1]), int(sys.argv[2])
+
     DATA_DIR = "data"
 
     # Load list of targets (kepids)
     df = pd.read_csv(os.path.join(DATA_DIR, "targets-small-sep.csv"))
-    kepid_list = df.kepid.values
+    kepid_list = df.kepid.values[start:stop]
 
     # loop over kepids and measure their rotation periods.
     gp_period, gp_errp, gp_errm = gp_prots(kepid_list)
