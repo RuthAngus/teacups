@@ -12,6 +12,8 @@ import subprocess
 from kepler_data import load_kepler_data
 from gatspy.periodic import LombScargle
 from filtering import butter_bandpass, butter_bandpass_filter
+import kplr
+client = kplr.API
 
 
 def GP_rot(kepid, RESULTS_DIR="results"):
@@ -126,8 +128,14 @@ def pgram_prots(kepid_list, LC_DIR="/Users/ruthangus/.kplr/data/lightcurves"):
     pgram_period, err = [np.zeros(len(kepid_list)) for i in range(2)]
     for i, kepid in enumerate(kepid_list):
         print(kepid, i, "of", len(kepid_list))
-        x, y, yerr = load_kepler_data(os.path.join(LC_DIR, "{}".
-                                                format(str(kepid).zfill(9))))
+        try:
+            x, y, yerr = load_kepler_data(os.path.join(LC_DIR, "{}".
+                                                    format(str(kepid).
+                                                           zfill(9))))
+        except:
+            "IndexError"
+            star = client.star("{}".format(int(kepid)))
+            star.get_light_curves(fetch=True, short_cadence=False)
         pgram_period[i], err[i] = pgram_ps(x, y, yerr)
     return pgram_period, err
 
@@ -138,14 +146,18 @@ if __name__ == "__main__":
 
     # Load list of targets (kepids)
     df = pd.read_csv(os.path.join(DATA_DIR, "targets-small-sep.csv"))
-    kepid_list = df.kepid.values[:3]
+    kepid_list = df.kepid.values
 
     # loop over kepids and measure their rotation periods.
-    gp_period, gp_errp, gp_errm = gp_prots(kepid_list)
+    # gp_period, gp_errp, gp_errm = gp_prots(kepid_list)
     pgram_period, pgram_err = pgram_prots(kepid_list)
 
     # save the rotation periods.
-    df = pd.DataFrame({"kepid": kepid_list, "gp_period": gp_period, "gp_errp":
-                       gp_errp, "gp_errm": gp_errm, "pgram_period":
-                       pgram_period, "pgram_err": pgram_err})
-    df.to_csv("targets-small-sep_periods.csv")
+    # df = pd.DataFrame({"kepid": kepid_list, "gp_period": gp_period, "gp_errp":
+    #                    gp_errp, "gp_errm": gp_errm, "pgram_period":
+    #                    pgram_period, "pgram_err": pgram_err})
+
+    # Just the pgram periods
+    df = pd.DataFrame({"kepid": kepid_list, "pgram_period": pgram_period,
+                       "pgram_err": pgram_err})
+    df.to_csv("targets-small-sep_pgram_periods.csv")
