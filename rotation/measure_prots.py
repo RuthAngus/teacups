@@ -10,7 +10,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import subprocess
 from kepler_data import load_kepler_data
-from gatspy.periodic import LombScargle
+# from gatspy.periodic import LombScargle
+from astropy.stats import LombScargle
 from filtering import butter_bandpass, butter_bandpass_filter
 import kplr
 client = kplr.API
@@ -57,8 +58,11 @@ def pgram_ps(x, y, yerr):
         The formal uncertainty on the period.
     """
     ps = np.arange(.1, 100, .1)
-    model = LombScargle().fit(x, y, yerr)
-    pgram = model.periodogram(ps)
+    freq = 1./ps
+    # model = LombScargle().fit(x, y, yerr)
+    # pgram = model.periodogram(ps)
+
+    pgram = LombScargle(x, y, yerr).power(freq)
 
     period = 35.  # days
     fs = 1./(x[1] - x[0])
