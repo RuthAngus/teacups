@@ -150,15 +150,14 @@ if __name__ == "__main__":
     kepid_list = df.kepid.values
 
     # loop over kepids and measure their rotation periods.
-    # gp_period, gp_errp, gp_errm = gp_prots(kepid_list)
-    pgram_period, pgram_err = pgram_prots(kepid_list)
+    gp_period, gp_errp, gp_errm = gp_prots(kepid_list)
 
     # save the rotation periods.
-    # df = pd.DataFrame({"kepid": kepid_list, "gp_period": gp_period, "gp_errp":
-    #                    gp_errp, "gp_errm": gp_errm, "pgram_period":
-    #                    pgram_period, "pgram_err": pgram_err})
+    df = pd.DataFrame({"kepid": kepid_list, "gp_period": gp_period, "gp_errp":
+                       gp_errp, "gp_errm": gp_errm})
+    df.to_csv("targets-small-sep_gp_periods.csv")
 
-    # Just the pgram periods
-    df = pd.DataFrame({"kepid": kepid_list, "pgram_period": pgram_period,
-                       "pgram_err": pgram_err})
-    df.to_csv("targets-small-sep_pgram_periods.csv")
+    # pgram_period, pgram_err = pgram_prots(kepid_list)
+    # df = pd.DataFrame({"kepid": kepid_list, "pgram_period": pgram_period,
+    #                    "pgram_err": pgram_err})
+    # df.to_csv("targets-small-sep_pgram_periods.csv")
