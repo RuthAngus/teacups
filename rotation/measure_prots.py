@@ -14,7 +14,7 @@ from kepler_data import load_kepler_data
 from astropy.stats import LombScargle
 from filtering import butter_bandpass, butter_bandpass_filter
 import kplr
-client = kplr.API
+client = kplr.API()
 
 
 def GP_rot(kepid, RESULTS_DIR="results"):
@@ -75,9 +75,7 @@ def pgram_ps(x, y, yerr):
     y /= var
 
     print("Calculating periodogram")
-    ps = np.arange(.1, 100, .1)
-    model = LombScargle().fit(x, yfilt, yerr)
-    pgram = model.periodogram(ps)
+    pgram = LombScargle(x, y, yerr).power(freq)
 
     peaks = np.array([i for i in range(1, len(ps)-1) if pgram[i-1] <
                         pgram[i] and pgram[i+1] < pgram[i]])
@@ -137,8 +135,6 @@ def pgram_prots(kepid_list, LC_DIR="/Users/ruthangus/.kplr/data/lightcurves"):
                                                     format(str(kepid).
                                                            zfill(9))))
         except IndexError:
-            print(kepid)
-            star = client.star("kepid")
             star = client.star(kepid)
             star.get_light_curves(fetch=True, short_cadence=False)
         pgram_period[i], err[i] = pgram_ps(x, y, yerr)
