@@ -138,6 +138,7 @@ def pgram_prots(kepid_list, LC_DIR="/Users/ruthangus/.kplr/data/lightcurves"):
                                                            zfill(9))))
         except IndexError:
             print(kepid)
+            star = client.star("kepid")
             star = client.star(kepid)
             star.get_light_curves(fetch=True, short_cadence=False)
         pgram_period[i], err[i] = pgram_ps(x, y, yerr)
