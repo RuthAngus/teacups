@@ -1,0 +1,55 @@
+\section{Data}
+\label{sec:data}
+
+\newcommand{\ncomoving}{10,000}
+\newcommand{\nfollow}{800}
+\newcommand{\nfollowme}{363}
+\newcommand{\ohpercent}{80}
+\newcommand{\mypercent}{80}
+\newcommand{\nconfirmed}{500}
+\newcommand{\pairprob}{99.99\%}
+\newcommand{\badpairprob}{50\%}
+
+Here we use comoving pairs and groups of stars identified in the TGAS
+catalogue by \citet{Oh2016}.
+These stars do not have precise absolute ages: their absolute ages are
+inferred by fitting isochrones to their photometric colours and parallaxes.
+However their relative ages are very precise---they should be identical to
+within a few million years as we assume that they formed at the same time from
+the same molecular cloud.
+We use the fact that these stars are coeval to test gyrochronology by
+predicting their ages from their rotation periods.
+We use the gyrochronal ages predicted for each star in the pair to infer the
+intrinsic scatter the gyrochronology relations.
+
+These comoving pairs were identified in the TGAS catalogue by identifying
+stars with similar positions and proper motions by \citet{Oh2016}.
+The probability that the stars were comoving was compared with the probability
+that the stars were drawn from an isotropic, random distribution of
+velocities.
+In this way, \citet{Oh2016} identified \ncomoving\ comoving pair candidates.
+
+Radial velocity (RV) follow-up of \nfollow\ comoving pair candidates was
+performed in February 2017.
+\ohpercent\% of these candidates were confirmed to have RVs consistent with
+being a comoving pair.
+Over seven nights, from the 26$^{th}$ of June to the 2${^nd}$ of July, we
+obtained RVs of \nfollowme\ further comoving pair candidates which fall in
+the \kepler\ field of view.
+Since a small number of stars in the original \citet{Oh2016} catalogue fall in
+the \kepler\ field, we used a slightly different sample with less stringent
+false positive rates.
+The original catalogue contains stars with a formal probability of being
+comoving of \pairprob.
+We used a catalogue of lower probability stars, specifically with a
+\badpairprob\ formal probability of being a true comoving pair and selected
+only stars within 10 parsecs of each other in order to reduce the false
+positive rate.
+\badpairprob\ may seem like a low probability, however with follow-up RV
+observations we were able to identify many of the false positives in this
+list.
+We found \mypercent\% to be true comoving pairs based on their RVs.
+We targeted stars in the \kepler\ field as these targets have ultra-precise
+time-series photometry, from which we can measure rotation periods.
+We selected the \nconfirmed\ confirmed comoving pairs to perform further
+analysis.
