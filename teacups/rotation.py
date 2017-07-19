@@ -1,5 +1,6 @@
 """
 A system for measuring rotation periods.
+This contains functions for measuring rotation.
 """
 
 import os
@@ -19,6 +20,8 @@ class prot(object):
     """
     Given a star object with a kepid or x, y and yerr values, measure the
     rotation period.
+    __init__ downloads the light curve if it doesn't already exist.
+    pgram_ps measures a periodogram rotation period.
     """
 
     def __init__(self, kepid=None, x=None, y=None, yerr=None,
@@ -87,7 +90,7 @@ class prot(object):
                                 pgram[i] and pgram[i+1] < pgram[i]])
 
             presults = pd.DataFrame({"periods": ps, "power": pgram})
-            presults.to_csv("{}.csv".format(pgram_fname))
+            presults.to_csv("{}".format(pgram_fname))
 
         pgram_period = ps[pgram == max(pgram[peaks])][0]
         if plot:
