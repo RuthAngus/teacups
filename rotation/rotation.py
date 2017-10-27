@@ -55,9 +55,20 @@ class prot(object):
         else:
             self.x, self.y, self.yerr = x, y, yerr
 
-    def pgram_ps(self, plot=False):
+    def pgram_ps(self, filter_period=35., plot=False, clobber=False):
         """
         Measure a periodogram rotation period
+        parameters:
+        ----------
+        filter_period: (float or None)
+            if None, the lc is not filtered.
+            if float, the lc is high-pass filtered with a cutoff of
+            filter_period.
+        plot: (bool)
+            If true the periodogram is plotted and saved.
+        clobber: (bool)
+            If true any existing periodogram file is overwritten.
+
         returns:
         -------
         pgram_period: (float)
@@ -68,20 +79,22 @@ class prot(object):
         Adds self.pgram_period, self.pgram_period.err, self.pgram and self.ps.
         """
 
-        pgram_fname = "pgrams/{}_pgram.csv".format(self.kepid)
-        if os.path.exists(pgram_fname):
-            pr = pd.read_csv(pgram_fname)
-            ps, pgram = pr.periods.values, pr.power.values
+        pgram_fname = "pgrams/{}_pgram".format(self.kepid)
+        if not os.path_exists(pgram_fname):
+            os.mkdir("pgrams")
+        if clobber:
+            freq = np.linspace(1./100, 1./.1, 100000)
+            ps = 1./freq
 
-        else:
-            ps = np.arange(.1, 100, .1)
-            freq = 1./ps
+            if filter_period:
+                filter_period = filter_period  # days
+                fs = 1./(self.x[1] - self.x[0])
+                lowcut = 1./filter_period
+                yfilt = flt.butter_bandpass_filter(self.y, lowcut, fs, order=3,
+                                                plot=False)
 
-            filter_period = 35.  # days
-            fs = 1./(self.x[1] - self.x[0])
-            lowcut = 1./filter_period
-            yfilt = flt.butter_bandpass_filter(self.y, lowcut, fs, order=3,
-                                               plot=False)
+            else:
+                yfilt = self.y*1
 
             print("Calculating periodogram")
             pgram = LombScargle(self.x, yfilt, self.yerr).power(freq)
@@ -90,14 +103,48 @@ class prot(object):
                                 pgram[i] and pgram[i+1] < pgram[i]])
 
             presults = pd.DataFrame({"periods": ps, "power": pgram})
-            presults.to_csv("{}".format(pgram_fname))
+            presults.to_csv("{}.csv".format(pgram_fname))
+            print("saving pgram to {}.csv".format(pgram_fname))
+
+        else:  # If not clobber, look for old result.
+            print("looking for {}.csv".format(pgram_fname))
+            if os.path.exists("{}.csv".format(pgram_fname)):  # If pgram already exists
+                print("{}.csv found, loading pre-exisiting periodogram"
+                      .format(pgram_fname))
+                pr = pd.read_csv("{}.csv".format(pgram_fname))
+                ps, pgram = pr.periods.values, pr.power.values
+
+            else:  # If pgram does not exist.
+                freq = np.linspace(1./100, 1./.1, 100000)
+                ps = 1./freq
+
+                filter_period = 35.  # days
+                fs = 1./(self.x[1] - self.x[0])
+                lowcut = 1./filter_period
+                yfilt = flt.butter_bandpass_filter(self.y, lowcut, fs, order=3,
+                                                plot=False)
+
+                print("Calculating periodogram")
+                pgram = LombScargle(self.x, yfilt, self.yerr).power(freq)
+
+                presults = pd.DataFrame({"periods": ps, "power": pgram})
+                presults.to_csv("{}.csv".format(pgram_fname))
+                print("saving pgram to {}.csv".format(pgram_fname))
+
+        peaks = np.array([i for i in range(1, len(ps)-1) if pgram[i-1] <
+                            pgram[i] and pgram[i+1] < pgram[i]])
 
         pgram_period = ps[pgram == max(pgram[peaks])][0]
         if plot:
-            plt.clf()
-            plt.plot(ps, pgram)
-            plt.axvline(pgram_period, color="r")
-            plt.savefig(pgram_fname)
+            pl.clf()
+            pl.subplot(2, 1, 1)
+            pl.plot(self.x-self.x[0], self.y, "k.")
+            pl.xlim(0, 50)
+            pl.subplot(2, 1, 2)
+            pl.plot(ps, pgram)
+            pl.axvline(pgram_period, color="orange", ls="--")
+            pl.savefig(pgram_fname)
+            print("saving plot as {}.png".format(pgram_fname))
 
         # Calculate the uncertainty.
         _freq = 1./pgram_period
