@@ -24,20 +24,12 @@ pair_df["group_id"] = range(len(pair_df.star1.values))
 pair_df["source_id1"] = all_tgas.source_id.values[pair_df.star1]
 pair_df["source_id2"] = all_tgas.source_id.values[pair_df.star2]
 
-final_df = pd.DataFrame(dict(
-    {"star1_index":
-     np.concatenate((pair_df.star1.values, pair_df.star2.values)),
-     "star2_index":
-     np.concatenate((pair_df.star2.values, pair_df.star1.values)),
-     "source_id1":
-     np.concatenate((pair_df.source_id1.values, pair_df.source_id2.values)),
-     "source_id2":
-     np.concatenate((pair_df.source_id2.values, pair_df.source_id1.values)),
-     "group_id": np.repeat(pair_df.group_id.values, 2)}))
+observed_with_group_id1 = pd.merge(observed, pair_df, left_on="source_id",
+                                   right_on="source_id1", how="inner")
+observed_with_group_id = pd.merge(observed_with_group_id1, observed,
+                                  left_on="source_id2",
+                                  right_on="source_id", how="outer",
+                                  suffixes=("_star1", "_star2"))
 
-print(np.shape(final_df), "double all pairs")
-
-final = pd.merge(final_df, observed, left_on="source_id1",
-                 right_on="source_id", how="inner")
-print(np.shape(final), "just observed stars now with row indices and group
-      ids.")
+print(np.shape(observed_with_group_id), "all observed stars")
+print(observed_with_group_id.keys())
