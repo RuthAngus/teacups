@@ -1,1 +1,12 @@
 *png
+*csv
+__pycache__
+*fits
+*out
+*txt
+*pdf
+.ipynb_checkpoints
+*aux
+*bbl
+*log
+*blg

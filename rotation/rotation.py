@@ -41,7 +41,7 @@ class prot(object):
         self.kepid = kepid
 
         # If x, y and yerr are not provided, load them.
-        if not x and not y and not yerr:
+        if not np.array([x, y, yerr]).any():
             lc_path = os.path.join(LC_DIR, str(kepid).zfill(9))
 
             # If you don't have the light curves, download them.
@@ -80,7 +80,7 @@ class prot(object):
         """
 
         pgram_fname = "pgrams/{}_pgram".format(self.kepid)
-        if not os.path_exists(pgram_fname):
+        if not os.path.exists("pgrams"):
             os.mkdir("pgrams")
         if clobber:
             freq = np.linspace(1./100, 1./.1, 100000)
@@ -138,11 +138,13 @@ class prot(object):
         if plot:
             pl.clf()
             pl.subplot(2, 1, 1)
-            pl.plot(self.x-self.x[0], self.y, "k.")
+            pl.plot(self.x-self.x[0], self.y, "k.", ms=3)
             pl.xlim(0, 50)
+            pl.title("Period = {0:.2f} days".format(pgram_period))
             pl.subplot(2, 1, 2)
             pl.plot(ps, pgram)
             pl.axvline(pgram_period, color="orange", ls="--")
+            pl.xlabel("Period (days)")
             pl.savefig(pgram_fname)
             print("saving plot as {}.png".format(pgram_fname))
 

@@ -60,7 +60,7 @@ tups = tups_fwd
 #          result.append(tup)
 #          pair_id_no_dups.append(pair_id[i])
 
-def find_new_stars(star, star_array):
+def find_group(star, star_array):
     """
     Given a star id, find all the pairs to that star in star_array.
     """
@@ -82,14 +82,25 @@ def find_new_stars(star, star_array):
     print("group = ", group)
     print("unique group = ", np.unique(np.array(group)))
     return np.unique(np.array(group))
-    # return star_array[:, 1][m1], star_array[:, 0][m2]
 
-# Now assign group ids. To start with, each pair in tups is a group. If any
-# star is repeated elsewhere, that star's pair is added to the group.
-def find_group(i, star_array):
-    print(tups[i][0], tups[i][1], "\n")
-    find_new_stars(tups[i][0], star_array)
-
+# Now assign group ids.
 star_array = np.vstack((star1, star2)).T
-for i in range(1):
-    find_group(i, star_array)
+groups = []
+group_ids = np.zeros(len(star1))
+print(len(group_ids), "len(group_ids)")
+number, next = 0, False
+for i in range(2):
+    groups.append(find_group(tups[i][0], star_array))
+    for j, g in enumerate(groups[i]): # assign group ids as number.
+        m = g == star1
+        print(len(group_ids[m]), j)
+        if group_ids[m][j] == 0:
+            group_ids[m][j] = number
+            print(group_ids[m], "group_ids")
+            next = True
+    if next:
+        number += 1
+
+# Now for each group, find those source_ids in the data frames and assign
+# them a group id.
+joint["group_id"] = np.array(group_ids)

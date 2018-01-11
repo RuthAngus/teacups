@@ -7,7 +7,7 @@ import pandas as pd
 from astropy.table import Table
 
 
-def row_ind(kepid):
+def row_ind(kepid, tgas=None):
     """
     Takes a KIC id (kepid) and returns the indices of the corresponding rows
     in stacked tgas.
@@ -25,11 +25,15 @@ def row_ind(kepid):
     m = kt.kepid.values == kepid
     source_id = int(kt.tgas_source_id.values[m])
 
-    # Find the row in stacked_tgas.
-    table = Table.read('stacked_tgas.fits')
-    stacked_tgas_df = table.to_pandas()
-    k = stacked_tgas_df.source_id.values == source_id
-    r = np.arange(len(k))[k]
+    # Find the row in stackekd_tgas.
+    if tgas is None:
+        table = Table.read('stacked_tgas.fits')
+    else:
+        table = tgas
+    # stacked_tgas_df = table.to_pandas()
+    # k = stacked_tgas_df.source_id.values == source_id
+    # r = np.arange(len(k))[k]
+    return np.where(table['source_id'] == source_id)
 
     t2 = Table.read('pairindices_cp1.fits')
     pair = t2.to_pandas()

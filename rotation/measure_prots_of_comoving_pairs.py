@@ -35,17 +35,13 @@ def download_all_light_curves():
 
 def measure_LS_period():
     data = pd.read_csv("../data/targets-small-sep.csv")
-    for i, kepid in enumerate(data.kepid.values):
+    for i, kepid in enumerate(data.kepid.values[10:50]):
         lc_dir = "/Users/ruthangus/.kplr/data/lightcurves/{}"\
             .format(str(kepid).zfill(9))
         x, y, yerr = kd.load_kepler_data(lc_dir)
-        plt.clf()
-        plt.plot(x[:1000], y[:1000], "k.")
-        plt.savefig("test")
 
         prot = ro.prot(kepid, x, y, yerr)
         prot.pgram_ps(plot=True)
-        input("enter")
 
 
 if __name__ == "__main__":
