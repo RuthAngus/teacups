@@ -7,36 +7,37 @@ import numpy as np
 import pandas as pd
 
 # Load the observed stars
-df = pd.read_csv("../data/targets-small-sep.csv")
+observed = pd.read_csv("../data/targets-small-sep.csv")
+print(np.shape(observed), "observed stars")
 
-# Load the tgas data
+# Load the tgas data (just to get the row inds)
 table = Table.read('stacked_tgas.fits')
-table_df = table.to_pandas()
-table_df["ruth_index"] = np.arange(np.shape(table_df)[0])
-print(table_df.ruth_index)
-
-# Merge the observed stars with tgas
-observed_tgas = pd.merge(df, table_df, on="source_id", how="inner")
-print(observed_tgas.ruth_index)
-print(np.shape(table_df), np.shape(df), np.shape(observed_tgas))
+all_tgas = table.to_pandas()
 
 # Load Semyeong's data file. These are ALL the pairs.
 t2 = Table.read('pairindices_cp1.fits')
 pair_df = t2.to_pandas()
+print(np.shape(pair_df), "all pairs")
 
-# star1_row_index, star2_row_index = [], []
-# for i, star in enumerate(observed_tgas.values):
-#     if np.isin(star, observed_tgas.ruth_index) and \
-#             np.isin(pair_df.star2.values[i], observed_tgas.ruth_index):
-#         star1_row_index.append(star)
-#         star2_row_index.append(pair_df.star2.values[i])
-# inds = np.array(group_id)
-# final_df =
+# Add group_id and source_id columns to semyeong's file.
+pair_df["group_id"] = range(len(pair_df.star1.values))
+pair_df["source_id1"] = all_tgas.source_id.values[pair_df.star1]
+pair_df["source_id2"] = all_tgas.source_id.values[pair_df.star2]
 
-for
+final_df = pd.DataFrame(dict(
+    {"star1_index":
+     np.concatenate((pair_df.star1.values, pair_df.star2.values)),
+     "star2_index":
+     np.concatenate((pair_df.star2.values, pair_df.star1.values)),
+     "source_id1":
+     np.concatenate((pair_df.source_id1.values, pair_df.source_id2.values)),
+     "source_id2":
+     np.concatenate((pair_df.source_id2.values, pair_df.source_id1.values)),
+     "group_id": np.repeat(pair_df.group_id.values, 2)}))
 
-observed_df["star1_row_index"] = np.array(star1_row_index)
-observed_df["star2_row_index"] = np.array(star2_row_index)
-observed_df["group_id"] = np.array(group_id)
+print(np.shape(final_df), "double all pairs")
 
-observed_df.to_csv("observed_kic_tgas.csv")
+final = pd.merge(final_df, observed, left_on="source_id1",
+                 right_on="source_id", how="inner")
+print(np.shape(final), "just observed stars now with row indices and group
+      ids.")
