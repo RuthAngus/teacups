@@ -8,9 +8,10 @@ magnetic braking has been established since the late 1960s
 \citep[\eg][]{Weber, Skumanich}.
 It is widely accepted that these stars lose angular momentum via their
 magnetized stellar wind and the rate of angular momentum loss is a function of
-stellar mass.
-Observations of young clusters suggest that the rotation periods of FGK dwarfs
-converge to a single rotation-age-mass relation after around 500 Myrs.
+stellar mass \racomment{CITATIONS}.
+Observations of young clusters indicate that the rotation periods of FGK dwarfs
+converge to a single rotation-age-mass relation after around 500 Myrs
+\racomment{CITATIONS}.
 A large range of rotation periods at a given mass is observed in the youngest
 star clusters, but this spread diminishes over time and older clusters show a
 reduced spread.
@@ -20,34 +21,31 @@ Rapid rotators lose angular momentum faster than slow rotators and 500 Myrs of
 magnetic braking is sufficient to spin-down the rapid rotators to the same
 rotation periods as their originally more slowly rotating fellow cluster
 members.
-The gyrochronology method uses the rotation period and mass, or mass proxy,
-to predict the age of a star.
+The gyrochronology method uses rotation period and mass, or mass proxy, to
+predict the age of a star.
 
 Many gyrochronology relations have been calibrated using stars with reliable
 ages and rotation periods \citep[\eg][]{Barnes2007, Mamajek2008, Meibom2010,
 Angus2015, Vansaders2016}.
 The majority of these studies used young open clusters, lacking a sample of
 old stars with reliable ages.
-The \citet{Angus2015} and \citet{Vansaders2016} studies were able to use new
-asteroseismic ages from the \kepler\ spacecraft to calibrate the gyrchronology
-relations at late ages.
+The \citet{Angus2015} and \citet{Vansaders2016} studies incorporated new
+asteroseismic ages from the \kepler\ spacecraft \citep{borucki2010} to
+calibrate the gyrchronology relations at late ages.
 These studies found that the rotation periods of older stars diverged from the
 expected power-law relation.
-\citet{Vansaders2016} fit these data with a model in which magnetic braking
-ceases after stars reach a critical Rossby number, $Ro$, the ratio of rotation
-period to convective overturn time.
+\citet{Vansaders2016} fit these data with a new model in which magnetic
+braking ceases after stars reach a critical Rossby number, $Ro$, the ratio of
+rotation period to convective overturn time.
 The Rossby number decreases with decreasing rotation period since stars spin
 down, yet their convective overturn time, $\tau$, is mostly determined by
 stellar mass and therefore remains constant.
 It is the combination of rotation and convective motion in the outer
 convective zone that produces the magnetic dynamo and Rossby number is
 therefore a reasonable proxy for magnetic activity.
-\citet{Vansaders2016} found the critical Rossby number to be 2.6.
-As stars' ratio of rotation period to convective overturn time creep below
-this number, magnetic braking appears to cease.
-Since the works of \citet{Angus2015} and \citet{Vansaders2016}, further
-evidence for a transitioning dynamo was discussed by \citet{...}.
-
+\citet{Vansaders2016} found the critical Rossby number to be 2.6
+\racomment{Uncertainty?}; magnetic braking ceases in stars with $Ro < 2.6$.
+\racomment{Add Metcalfe paragraph.}
 The revised \citet{Vansaders2016} gyrochronology model indicates that
 Solar-mass stars cease braking at around Solar age, higher mass stars cease
 braking at earlier times and lower mass cease braking at later times.
@@ -55,50 +53,39 @@ This mass dependence is built into the Rossby number parameterisation of the
 \citet{Vansaders2016} model and describes the observations well.
 The \citet{Vansaders2016} model is able to reproduce the data, however these
 data are sparse---there are only around \nastero\ FGK dwarfs with
-asteroseismic ages and rotation periods---and the data sets used to calibrate
-are heterogeneous and are subject to large selection and detection biases.
-In order to confirm and refine the \citet{Vansaders2016} model, more data are
-needed and specifically more ages of old stars with rotation periods will be
-particularly valuable.
-Such data are likely to be provided by the \tess, the Transiting Exoplanet
-Survey Satellite.
-Before those data become available however, we can use stars with ages derived
-from other methods, not as precise as asteroseismology but numerous, to test
-the gyrochronology models and characterise the intrinsic scatter in the
-relations.
+asteroseismic ages and rotation periods---and the data sets used for
+calibration are heterogeneous and subject to selection and detection biases.
+More data are needed in order to confirm and refine the \citet{Vansaders2016}
+model, specifically more precise ages of old stars with rotation periods will
+be particularly valuable.
+Such data are likely to be provided by \tess, the Transiting Exoplanet Survey
+Satellite \citep{ricker2015}.
+Before those data become available however, we can use comparative ages to
+test the gyrochronology models and characterize the intrinsic scatter in the
+relations, such as those provided by binaries and clusters.
 
-\subsection{The rotation period gap}
-In addition to the transition in magnetic dynamo behaviour observed at old
-ages by \citet{angus2015} and \citet{vansaders2016}, \kepler\ data revealed
-another quirk of magnetic dynamo evolution that was discovered by
-\citet{mcquillan2014}.
-\citet{mcquillan2014} measured the rotation periods of more than 34,000
-\kepler\ stars and showed a gap in the rotation period distribution of M
-dwarfs at around 15 days.
-Later, \citet{davenport2017} used \Gaia\ parallaxes to eliminate contaminating
-dwarfs from the \citet{mcquillan2014} sample and revealed that this gap
-extends into the FGK stars too.
-Its presence can be explained by two scenarios: either a discontinuity in the
-local star formation history around 600 Myrs ago is being reflected in the
-rotation distribution (the gap appears to follow a 600 Myr isochrone, located
-at shorter periods in hot stars and longer periods in cool stars) or it can be
-explained by some rapid transition in magnetic dynamo behaviour at 600 Myrs.
-This change in the magnetic field would have to result in a rapid,
-super-Skumanich spin-down of stars at 600 Myrs.
+\subsection{The origin of wide binaries.}
+\racomment{Some background on binary formation and longevity.}
 
 \subsection{The origin of wide binaries}
+The \citet{oh2016} catalogue of wide binaries discovered with \gaia\ data
+provide a sample of widely separated pairs and groups of stars.
+\citet{oh2016} discovered comoving pairs of stars as widely separated as 10
+kiloparsecs, and they likely would have discovered pairs with even greater
+separations, had they relaxed the strict 10 kpc search cut off.
+\citet{andrew2017} demonstrate that there is a high false-positive rate of
+binary stars (stars that are coincidentally comoving) at separations larger
+than ....
+However, it is likely that a fraction of the largest separation binaries are
+indeed real.
 The mean separation of the comoving pairs used in this analysis is \meansep\
 parsec.
-As such we do not call them wide binaries as their origin is unknown.
-We suppose that they were binaries at some point in the past and have been
-recently disrupted, however binaries have never previously been found at these
-large separations.
-The discovery of Kronos and Krious \citep{oh2017}, a comoving pair from
-the \citep{oh2017} catalogue is an example of two chemically dissimilar
-comoving stars.
-The origin of their dramatically different chemical abundances is either due
-to the recent ingestion of a planet by one of the stars, with some refactory
-elements remaining on the stellar surface, or the stars had different birthing
+Kronos and Krios \citep{oh2017}, a pair of comoving stars in the
+\citep{oh2016} catalog is an example of two chemically dissimilar comoving
+stars.
+The origin of their different chemical abundances is either due to the recent
+ingestion of a planet by one of the stars, with some refactory elements
+remaining on the stellar surface, or the stars had different birthing
 environments.
 The arguments rely on the strength of the common birth-site assumption: either
 you assume the stars were born together and the different chemistry must

@@ -1,4 +1,5 @@
-\documentclass[useAMS, usenatbib, preprint, 12pt]{aastex}
+% \documentclass[useAMS, usenatbib, preprint, 12pt]{aastex}
+\documentclass[useAMS, usenatbib]{mn2e}
 \usepackage{cite, natbib}
 \usepackage{float}
 \usepackage{epsfig}
@@ -53,34 +54,49 @@
 
 \title{Testing gyrochronology with Gaia comoving pairs}
 
-\author{%
-    Ruth Angus\altaffilmark{\columbia, }\altaffilmark{\simons},
-    Semyeong Oh\altaffilmark{\pton},
-    Adrian Price-Whelan\altaffilmark{\pton},
-    David W. Hogg\altaffilmark{\nyu, }\altaffilmark{\cca, }
-    \altaffilmark{\mpia, }\altaffilmark{\cds},
-    Daniel Foreman-Mackey\altaffilmark{\cca, }\altaffilmark{\uw},
-    Matt Wilde\altaffilmark{\uw},
-    Stephanie Douglas\altaffilmark{\columbia},
-    David Kipping\altaffilmark{\columbia},
-    Marcel Agueros\altaffilmark{\columbia} \&
-    David Spergel\altaffilmark{\pton, }\altaffilmark{\cca}
-}
+\author[R.~Angus \emph{et al.}]{%
+    Ruth~Angus,$^1$\thanks{ruth.angus@astro.ox.ac.uk}
+    Semyeong Oh$^2$
+    Adrian Price-Whelan$^2$
+    David W. Hogg$^{3, 4, 5, 6}$
+    Daniel Foreman-Mackey$^4$
+    Matt Wilde$^7$ \\
+    $^1$Columbia University, Simons Fellow
+    $^2$Princeton University
+    $^3$NYU
+    $^4$CCA
+    $^5$MPIA
+    $^6$CDS
+    $^7$UW}
 
-\altaffiltext{\columbia}{Department of Astronomy, Columbia
-University, NY, NY}
-\altaffiltext{\simons}{Simons Fellow, RuthAngus@gmail.com}
-\altaffiltext{\nyu}{Center for Cosmology and Particle Physics, New York
-University, NY, NY}
-\altaffiltext{\cca}{Center for Computational Astrophysics, Flatiron Institute,
-NY, NY}
-\altaffiltext{\mpia}{Max Planck Institute of Astronomy, Heidelberg, Germany}
-\altaffiltext{\cds}{Center for Data Science, New York University, NY, NY}
-\altaffiltext{\pton}{Princeton University}
-\altaffiltext{\uw}{University of Washington}
+% \author{%
+%     Ruth Angus\altaffilmark{\columbia, }\altaffilmark{\simons},
+%     Semyeong Oh\altaffilmark{\pton},
+%     Adrian Price-Whelan\altaffilmark{\pton},
+%     David W. Hogg\altaffilmark{\nyu, }\altaffilmark{\cca, }
+%     \altaffilmark{\mpia, }\altaffilmark{\cds},
+%     Daniel Foreman-Mackey\altaffilmark{\cca, }\altaffilmark{\uw},
+%     Matt Wilde\altaffilmark{\uw},
+%     Stephanie Douglas\altaffilmark{\columbia},
+%     David Kipping\altaffilmark{\columbia},
+%     Marcel Agueros\altaffilmark{\columbia} \&
+%     David Spergel\altaffilmark{\pton, }\altaffilmark{\cca}
+% }
+
+% \altaffiltext{\columbia}{Department of Astronomy, Columbia
+% University, NY, NY}
+% \altaffiltext{\simons}{Simons Fellow, RuthAngus@gmail.com}
+% \altaffiltext{\nyu}{Center for Cosmology and Particle Physics, New York
+% University, NY, NY}
+% \altaffiltext{\cca}{Center for Computational Astrophysics, Flatiron Institute,
+% NY, NY}
+% \altaffiltext{\mpia}{Max Planck Institute of Astronomy, Heidelberg, Germany}
+% \altaffiltext{\cds}{Center for Data Science, New York University, NY, NY}
+% \altaffiltext{\pton}{Princeton University}
+% \altaffiltext{\uw}{University of Washington}
 
 \begin{abstract}
-    The rotation periods of main sequence FGK stars increase over time and can
+    The rotation periods of main sequence, FGK stars increase over time and can
     be used to infer their ages via gyrochronology.
     However, the precision and accuracy of the gyrochronology method over has
     not yet been established over a large range of masses and ages, in part
